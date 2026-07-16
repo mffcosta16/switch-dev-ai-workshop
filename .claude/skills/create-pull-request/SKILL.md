@@ -11,7 +11,7 @@ description: >
 
 # Create Pull Request
 
-Create GitHub pull requests for the `kalstong/switch-dev-ai-workshop` repository
+Create GitHub pull requests for the `mffcosta16/switch-dev-ai-workshop` repository
 with a standardized title format that references the related issue number.
 
 ## Workflow
@@ -21,13 +21,31 @@ with a standardized title format that references the related issue number.
 Before creating the PR, collect what you need:
 
 - **Current branch**: run `git branch --show-current` to confirm you're not on `main`
-- **Related issue**: ask the user which issue this PR addresses (if not already clear).
-  Look up the issue to pull context for the PR description.
+- **Related issue**: confirm whether this PR has a related issue (see the
+  "Confirm a related issue" step below before drafting).
 - **Changes**: run `git log main..HEAD --oneline` and `git diff main...HEAD --stat`
   to understand what changed
 
 If the user is still on `main`, help them create a feature branch first using the
 convention `feat/<issue-number>-<short-slug>` (e.g., `feat/6-bootstrap-web-app`).
+
+#### Confirm a related issue
+
+Every PR should reference an issue — the title format and `Closes #N` link both
+depend on it. Before drafting, establish the issue number:
+
+1. **Check for an obvious link first.** Look at the branch name (e.g.
+   `feat/6-...` implies issue #6) and this session's history — if the
+   `create-github-issue` skill was already run, use the issue it created. Confirm
+   the number with the user rather than assuming.
+2. **If no issue is known, ask the user:** "Which issue does this PR address?"
+3. **If the user says there is no issue,** offer to create one first by invoking
+   the `create-github-issue` skill, so the PR can link to it. Only proceed
+   without an issue if the user explicitly declines — in that case use a plain
+   descriptive title (no `#N` prefix) and omit `Closes #N` from the body.
+
+Once you have the issue number, look it up (`gh issue view <number>`) to pull
+context for the PR description.
 
 ### 2. Check branch is pushed
 
@@ -61,7 +79,10 @@ Examples:
 
 #### PR body template
 
-Use this template for the description:
+The repository has a canonical PR template at `.github/pull_request_template.md`.
+Use it as the source of truth for the description so PRs created via `gh` match
+the ones GitHub auto-fills in the web UI. Fill in each section and check the
+boxes that apply:
 
 ```markdown
 ## Summary
@@ -69,24 +90,43 @@ Use this template for the description:
 
 Closes #<issue-number>
 
-## Changes
+## Type of change
+- [ ] Bug fix (non-breaking change that fixes an issue)
+- [ ] New feature (non-breaking change that adds functionality)
+- [ ] Breaking change (fix or feature that would change existing behavior)
+- [ ] Refactor (no functional change)
+- [ ] Documentation
+- [ ] Chore / tooling
+
+## Changes description
 <Bulleted list of the key changes, grouped by area if needed>
 
-## Test plan
-- [ ] <Step to verify the change works>
-- [ ] <Another verification step>
-- [ ] <Edge case to check>
+## How has this been tested?
+- [ ] Unit tests
+- [ ] Integration tests
+- [ ] Manual testing
+
+## Checklist
+- [ ] Code follows project conventions
+- [ ] Self-review completed
+- [ ] Tests added or updated where necessary
+- [ ] Documentation updated (if needed)
 ```
 
 Guidelines:
+- Keep this in sync with `.github/pull_request_template.md`. If that file changes,
+  prefer reading it (`cat .github/pull_request_template.md`) and using its current
+  contents over the copy above.
 - The **summary** should give a reviewer enough context to understand the PR
   without reading every line of code. Link the issue with `Closes #N` so it
   auto-closes when merged.
-- The **changes** section highlights what's important — don't list every file,
+- Under **Type of change**, check exactly the boxes that apply (usually one).
+- The **changes description** highlights what's important — don't list every file,
   focus on the meaningful decisions (new dependencies, architectural choices,
   API changes).
-- The **test plan** should be actionable steps a reviewer can follow to verify
-  the change works. Include edge cases worth checking.
+- Under **How has this been tested?**, check the testing you actually did and,
+  where useful, add a short note on the concrete steps a reviewer can follow.
+- Work through the **Checklist** honestly before requesting review.
 
 ### 4. Confirm with the user
 
