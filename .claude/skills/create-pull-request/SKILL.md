@@ -21,13 +21,31 @@ with a standardized title format that references the related issue number.
 Before creating the PR, collect what you need:
 
 - **Current branch**: run `git branch --show-current` to confirm you're not on `main`
-- **Related issue**: ask the user which issue this PR addresses (if not already clear).
-  Look up the issue to pull context for the PR description.
+- **Related issue**: confirm whether this PR has a related issue (see the
+  "Confirm a related issue" step below before drafting).
 - **Changes**: run `git log main..HEAD --oneline` and `git diff main...HEAD --stat`
   to understand what changed
 
 If the user is still on `main`, help them create a feature branch first using the
 convention `feat/<issue-number>-<short-slug>` (e.g., `feat/6-bootstrap-web-app`).
+
+#### Confirm a related issue
+
+Every PR should reference an issue — the title format and `Closes #N` link both
+depend on it. Before drafting, establish the issue number:
+
+1. **Check for an obvious link first.** Look at the branch name (e.g.
+   `feat/6-...` implies issue #6) and this session's history — if the
+   `create-github-issue` skill was already run, use the issue it created. Confirm
+   the number with the user rather than assuming.
+2. **If no issue is known, ask the user:** "Which issue does this PR address?"
+3. **If the user says there is no issue,** offer to create one first by invoking
+   the `create-github-issue` skill, so the PR can link to it. Only proceed
+   without an issue if the user explicitly declines — in that case use a plain
+   descriptive title (no `#N` prefix) and omit `Closes #N` from the body.
+
+Once you have the issue number, look it up (`gh issue view <number>`) to pull
+context for the PR description.
 
 ### 2. Check branch is pushed
 
