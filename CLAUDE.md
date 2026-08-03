@@ -4,7 +4,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-AI workshop demo app: React 19 frontend + Express 5 backend, plus a standalone slide deck (`slides.html`) for an "AI for Developers" workshop presentation.
+Recipe app (workshop demo): React 19 frontend + Express 5 backend for writing, saving, and browsing recipes, plus a standalone slide deck (`slides.html`) for an "AI for Developers" workshop presentation.
+
+The recipe features are being built incrementally — see the open GitHub issues (user stories US-1 through US-7) for the planned scope. `src/App.tsx` is currently a shell (empty-state landing); recipe list/editor/detail views and the `/api/recipes` CRUD API are not yet implemented.
 
 ## Commands
 
